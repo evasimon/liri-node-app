@@ -55,10 +55,12 @@ function tweets() {
         for (var i = 0; i < tweets.length; i++) {
           var tweetText = tweets[i].text;
           var tweetCreated = tweets[i].created_at;
-          console.log(tweetText);
-          console.log(tweetCreated);
+          var printTweets = `\n********************************************\n`
+                          + `Tweet: ${tweetText}\n`
+                          + `Date: ${tweetCreated}\n`
+                          + `********************************************\n`
+          saveData(printTweets);
         }
-        // console.log(tweets);
       } else {
         return console.log(error);
 
@@ -82,20 +84,25 @@ function spotify(songTitle) {
 
     if (err) {
       return console.log('Error occurred: ' + err);
-    }
+    } else {
     
-    var name = JSON.stringify(data.tracks.items[0].album.artists[0].name, null, 2);
-    var song = JSON.stringify(data.tracks.items[0].name, null, 2);
-    var url = JSON.stringify(data.tracks.items[0].preview_url, null, 2);
-    var album = JSON.stringify(data.tracks.items[0].album.name, null, 2);
+      var name = JSON.stringify(data.tracks.items[0].album.artists[0].name, null, 2);
+      var song = JSON.stringify(data.tracks.items[0].name, null, 2);
+      var url = JSON.stringify(data.tracks.items[0].preview_url, null, 2);
+      var album = JSON.stringify(data.tracks.items[0].album.name, null, 2);
 
-    console.log("********************************************");
-    console.log(`Artist(s): ${name}`);
-    console.log(`The Song's name: ${song}`);
-    console.log(`Spotify URL: ${url}`);
-    console.log(`Album's name: ${album}`);
-    console.log("********************************************");
+      var printSong = `\n********************************************\n`
+                    + `Artist(s): ${name}\n`
+                    + `The Song's name: ${song}\n`
+                    + `Spotify URL: ${url}\n`
+                    + `Album's name: ${album}\n`
+                    + `********************************************\n`
+
+      saveData(printSong);
+    }
+
   });
+
 }
 
 function imdb(movieTitle) {
@@ -124,7 +131,7 @@ function imdb(movieTitle) {
                       + `Language: ${language}\n`
                       + `Plot: ${plot}\n`
                       + `Actors: ${actors}\n`
-                      + `********************************************`
+                      + `********************************************\n`
 
       saveData(printMovie);
     }
@@ -137,12 +144,14 @@ function random() {
     if (err) {
       return console.log(err);
     }
-    var data = data.split(',');
+    var data = data.split(',')
+
+    var printData = `\n********************************************\n` 
+                  + `${data}\n********************************************\n`
 
     input(data[0], data[1]);
 
-
-    console.log(data);
+    saveData(printData);
   })
 }
 
