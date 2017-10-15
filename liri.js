@@ -4,29 +4,36 @@ var keysINeed = require('./keys.js');
 var Twitter = require('twitter');
 var Spotify = require('node-spotify-api');
 var request = require('request');
-// sets argument variables
-var command = process.argv[2];
-var songName = process.argv[3];
-var movieName = process.argv[3];
+var fs = require('fs');
 
 // checks for defaults
 if ( process.argv[3] === undefined ) {
   songName = 'The Sign';
 }
 
-// checks for command
-switch (command) {
-  case 'my-tweets':
-    tweets();
-    break;
+function input(arg1, arg2){
+  // sets argument variables
+  var command = arg1;
+  var chosenInput = arg2;
 
-  case 'spotify-this-song':
-    spotify();
-    break;
+  // checks for command
+  switch (command) {
+    case 'my-tweets':
+      tweets();
+      break;
 
-  case 'movie-this':
-    imdb();
-    break;
+    case 'spotify-this-song':
+      spotify(chosenInput);
+      break;
+      
+    case 'movie-this':
+      imdb(chosenInput);
+      break;
+
+      case 'do-what-it-says':
+      random();
+      break;
+  }
 }
 
 // for `node liri.js my-tweets`
@@ -60,13 +67,13 @@ function tweets() {
     });
 }
 
-function spotify() {
+function spotify(songTitle) {
  
   var spotify = new Spotify(keysINeed.spotifyKeys);
 
   params = {
     type: 'track',
-    query: songName,
+    query: songTitle,
     limit: 1
   }
    
@@ -91,8 +98,8 @@ function spotify() {
   });
 }
 
-function imdb() {
-  var queryUrl = "http://www.omdbapi.com/?t=" + movieName + "&y=&plot=short&apikey=40e9cece";
+function imdb(movieTitle) {
+  var queryUrl = "http://www.omdbapi.com/?t=" + movieTitle + "&y=&plot=short&apikey=40e9cece";
 
   request(queryUrl, function(error, response, body) {
     var dataObj = JSON.parse(body);
@@ -121,6 +128,37 @@ function imdb() {
     }
   });
 }
+
+function random() {
+  fs.readFile('random.txt', 'utf8', function(err, data) {
+    if (err) {
+      return console.log(err);
+    }
+    var data = data.split(',');
+
+    input(data[0], data[1]);
+
+
+    console.log(data);
+  })
+}
+
+input(process.argv[2],process.argv[3]);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
