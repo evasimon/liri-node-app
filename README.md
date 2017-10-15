@@ -12,7 +12,7 @@ To retrieve data that will power this app, we set requests to the Twitter, Spoti
 
 ### How to run LIRI
 
-Enter your terminal or bash the following line of code. liri.js can take in one of the following commands:
+liri.js can take in one of the following commands: 
 
 * `node liri.js my-tweets` 
 	* displays the latest 20 tweets and when they were created in the terminal/bash and adds them to a log.txt file
