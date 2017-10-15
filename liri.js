@@ -25,7 +25,7 @@ function input(arg1, arg2){
     case 'spotify-this-song':
       spotify(chosenInput);
       break;
-      
+
     case 'movie-this':
       imdb(chosenInput);
       break;
@@ -115,19 +115,22 @@ function imdb(movieTitle) {
       var plot = dataObj.Plot;
       var actors = dataObj.Actors;
 
-      console.log("********************************************");
-      console.log(`Movie Title: ${title}`);
-      console.log(`Release Year: ${year}`);
-      console.log(`IMDB Rating: ${imdbRating}`);
-      console.log(`Rotten Tomatoes Rating: ${rtRating}`);
-      console.log(`Country: ${country}`);
-      console.log(`Language: ${language}`);
-      console.log(`Plot: ${plot}`);
-      console.log(`Actors: ${actors}`);
-      console.log("********************************************");
+      var printMovie = `\n********************************************\n`
+                      + `Movie Title: ${title}\n`
+                      + `Release Year: ${year}\n`
+                      + `IMDB Rating: ${imdbRating}\n`
+                      + `Rotten Tomatoes Rating: ${rtRating}\n`
+                      + `Country: ${country}\n`
+                      + `Language: ${language}\n`
+                      + `Plot: ${plot}\n`
+                      + `Actors: ${actors}\n`
+                      + `********************************************`
+
+      saveData(printMovie);
     }
   });
 }
+
 
 function random() {
   fs.readFile('random.txt', 'utf8', function(err, data) {
@@ -141,6 +144,20 @@ function random() {
 
     console.log(data);
   })
+}
+
+function saveData(log) {
+  fs.appendFile("log.txt", log, function(err) {
+      // If an error was experienced we say it.
+      if (err) {
+        console.log(err);
+      }
+      // If no error is experienced, we'll log the phrase "Content Added" to our node console.
+      else {
+        console.log(log);
+      }
+    }
+  )
 }
 
 input(process.argv[2],process.argv[3]);
